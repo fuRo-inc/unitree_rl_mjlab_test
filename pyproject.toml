@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unitree-rl-mjlab"
+version = "0.0.1"
+description = "Unitree task definitions and launch scripts on top of the local mjlab checkout."
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "mjlab",
+]
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]
+mjlab = { path = "./mjlab", editable = true }
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["src", "src.*", "furo_rl_locomotion_mjlab", "furo_rl_locomotion_mjlab.*"]
+
+[tool.setuptools.package-data]
+src = ["assets/**/*"]
+"furo_rl_locomotion_mjlab" = ["asset_zoo/**/*", "legolas/**/*"]

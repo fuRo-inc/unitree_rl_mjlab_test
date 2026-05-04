@@ -2,16 +2,21 @@
 
 from setuptools import setup, find_packages
 
-# Minimum dependencies required prior to installation
 INSTALL_REQUIRES = [
-    "mjlab==1.2.0",
-    "mujoco-warp==3.5.0",
+    "mjlab>=1.3.0,<2",
 ]
 
-# Installation operation
 setup(
     name="unitree_rl_mjlab",
-    packages=["src"],
     version="0.0.1",
+    packages=find_packages(
+        include=[
+            "src",
+            "src.*",
+            "furo_rl_locomotion_mjlab",
+            "furo_rl_locomotion_mjlab.*",
+        ]
+    ),
     install_requires=INSTALL_REQUIRES,
+    python_requires=">=3.10,<3.14",
 )

@@ -24,6 +24,22 @@ and sim-to-real deployment.
 
 Please refer to [setup.md](doc/setup_en.md) for installation and configuration steps.
 
+### Using `uv`
+
+At the repository root, create the environment and install the local `mjlab` checkout:
+
+```bash
+uv sync
+```
+
+Then launch scripts through `uv run`:
+
+```bash
+uv run python scripts/list_envs.py
+uv run python scripts/train.py Unitree-G1-Flat --env.scene.num-envs=4096
+uv run python scripts/play.py Unitree-G1-Flat --checkpoint_file=logs/rsl_rl/g1_velocity/<run>/model_<iteration>.pt
+```
+
 
 ## 🔁 Process Overview
 

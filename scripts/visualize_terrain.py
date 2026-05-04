@@ -89,7 +89,7 @@ class _AppState(TypedDict):
 
 
 def main():
-  server = viser.ViserServer()
+  server = viser.ViserServer(host="0.0.0.0", port=8080)
 
   # Load available terrains from config.
   available_presets = ALL_TERRAINS_CFG.sub_terrains

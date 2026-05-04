@@ -1,0 +1,6 @@
+[submodule "mjlab"]
+	path = mjlab
+	url = https://github.com/fuRo-inc/mjlab.git
+[submodule "furo_rl_locomotion_mjlab"]
+	path = furo_rl_locomotion_mjlab
+	url = https://github.com/fuRo-inc/furo_rl_locomotion_mjlab.git

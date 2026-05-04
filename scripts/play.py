@@ -9,6 +9,7 @@ from typing import Literal
 import torch
 import tyro
 
+import mjlab
 from mjlab.envs import ManagerBasedRlEnv
 from mjlab.rl import MjlabOnPolicyRunner, RslRlVecEnvWrapper
 from mjlab.tasks.registry import list_tasks, load_env_cfg, load_rl_cfg, load_runner_cls
@@ -23,6 +24,8 @@ from mjlab.viewer import NativeMujocoViewer, ViserPlayViewer
 class PlayConfig:
   agent: Literal["zero", "random", "trained"] = "trained"
   checkpoint_file: str | None = None
+  wandb_run_path: str | None = None
+  registry_name: str | None = None
   motion_file: str | None = None
   num_envs: int | None = None
   device: str | None = None
@@ -190,6 +193,20 @@ def main():
     return_unknown_args=True,
     config=mjlab.TYRO_FLAGS,
   )
+
+  if "fuRo" in chosen_task:
+    from furo_rl_locomotion_mjlab.rl.play import PlayConfig as FuroPlayConfig
+    from furo_rl_locomotion_mjlab.rl.play import run_play as furo_run_play
+
+    args = tyro.cli(
+      FuroPlayConfig,
+      args=remaining_args,
+      default=FuroPlayConfig(),
+      prog=sys.argv[0] + f" {chosen_task}",
+      config=mjlab.TYRO_FLAGS,
+    )
+    furo_run_play(chosen_task, args)
+    return
 
   # Parse the rest of the arguments + allow overriding env_cfg and agent_cfg.
   agent_cfg = load_rl_cfg(chosen_task)

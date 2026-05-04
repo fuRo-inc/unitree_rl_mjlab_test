@@ -10,6 +10,7 @@ from typing import Literal, cast
 
 import tyro
 
+import mjlab
 from mjlab.envs import ManagerBasedRlEnv, ManagerBasedRlEnvCfg
 from mjlab.rl import MjlabOnPolicyRunner, RslRlBaseRunnerCfg, RslRlVecEnvWrapper
 from mjlab.tasks.registry import list_tasks, load_env_cfg, load_rl_cfg, load_runner_cls
@@ -205,6 +206,20 @@ def main():
     return_unknown_args=True,
     config=mjlab.TYRO_FLAGS,
   )
+
+  if "fuRo" in chosen_task:
+    from furo_rl_locomotion_mjlab.rl.train import TrainConfig as FuroTrainConfig
+    from furo_rl_locomotion_mjlab.rl.train import launch_training as furo_launch_training
+
+    args = tyro.cli(
+      FuroTrainConfig,
+      args=remaining_args,
+      default=FuroTrainConfig.from_task(chosen_task),
+      prog=sys.argv[0] + f" {chosen_task}",
+      config=mjlab.TYRO_FLAGS,
+    )
+    furo_launch_training(task_id=chosen_task, args=args)
+    return
 
   args = tyro.cli(
     TrainConfig,
